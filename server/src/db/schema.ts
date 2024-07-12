@@ -12,9 +12,17 @@ export const feeds = sqliteTable("feeds", {
     content: text("content").notNull(),
     listed: integer("listed").default(1).notNull(),
     draft: integer("draft").default(1).notNull(),
+    top: integer("top").default(0).notNull(),
     uid: integer("uid").references(() => users.id).notNull(),
     createdAt: created_at,
     updatedAt: updated_at,
+});
+
+export const visits = sqliteTable("visits", {
+    id: integer("id").primaryKey(),
+    feedId: integer("feed_id").references(() => feeds.id, { onDelete: 'cascade' }).notNull(),
+    ip: text("ip").notNull(),
+    createdAt: created_at,
 });
 
 export const friends = sqliteTable("friends", {
